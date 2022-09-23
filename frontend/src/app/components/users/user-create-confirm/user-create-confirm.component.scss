@@ -6,9 +6,11 @@
     width: 40%;
     padding: 0;
     .mat-card-header {
-        background-color: #5262bc;
+        background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
         color: #fff;
         padding: 20px 10px 0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
     .mat-card-content {
         padding: 40px 30px 20px 30px;
@@ -45,6 +47,7 @@
         margin: 20px 0;
         button {
             width: 180px;
+            border-radius: 50px;
             transition: all 0.3s ease 0s;
         }   
         .mat-confirm-btn {

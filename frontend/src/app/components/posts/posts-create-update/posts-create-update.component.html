@@ -1,0 +1,35 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ isCreate ? 'Create Posts' : (isEdit ? 'Update Post' : 'Post Detail') }}</mat-card-title>
+        <button mat-raised-button  *ngIf="isDetail" (click)="changeEditForm()" routerLink="/posts/edit/{{ postId }}" [ngClass]="isEdit ? 'py-15' : ''">
+            Edit
+        </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <form [formGroup]="postCreateForm" novalidate>
+            <mat-form-field appearance="fill">
+                <mat-label>Title</mat-label>
+                <input matInput formControlName="title" [readonly]="isDetail">
+                <mat-error *ngIf="postCreateForm.controls['title'].dirty && postCreateForm.controls['title'].hasError('required')">Title is required.</mat-error>
+                <mat-error *ngIf="postCreateForm.controls['title'].dirty && postCreateForm.controls['title'].hasError('maxlength')">Title must not be more than 255 characters.</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [readonly]="isDetail"></textarea>
+                <mat-error *ngIf="postCreateForm.controls['description'].dirty && postCreateForm.controls['description'].hasError('required')">Description is required.</mat-error>
+            </mat-form-field>
+
+            <mat-slide-toggle formControlName="status" color="primary" labelPosition="before" *ngIf="isEdit">Status</mat-slide-toggle>
+        </form>
+    </mat-card-content>
+    <mat-card-actions *ngIf="!isDetail">
+        <button type="submit" color="green" class="btn confirm-btn" mat-raised-button [disabled]="!postCreateForm.valid" (click)="gotoConfirm(postCreateForm.value)">
+            Confirm
+        </button>
+        <button type="reset" color="red" class="btn reset-btn" (click)="postCreateForm.reset()" mat-raised-button>
+            Clear
+        </button>
+    </mat-card-actions>
+</mat-card>

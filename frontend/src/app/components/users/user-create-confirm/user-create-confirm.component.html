@@ -1,0 +1,50 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ isEdit ? 'Update User Confirmation' : 'Create User Confirmation' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <input type="hidden" value="loggedinUser.id">
+        <div class="profile-pic">
+            <img src="{{ userCreateData.profile }}">
+        </div>
+        <mat-label>
+            <span><b>Name </b></span>
+            <p>{{ userCreateData.name }}</p>
+        </mat-label>
+        <mat-label>
+            <span><b>Email Address </b></span>
+            <p>{{ userCreateData.email }}</p>
+        </mat-label>
+        <mat-label>
+            <span><b>Password </b></span>
+            <p id="pwd">{{ hidePassword(userCreateData.password) }}</p>
+        </mat-label>
+        <mat-label>
+            <span><b>Phone </b></span>
+            <p>{{ userCreateData.phone }}</p>
+        </mat-label>
+        <mat-label>
+            <span><b>Date of Birth </b></span>
+            <p>{{ userCreateData.dob | date:'dd/MM/yy' }}</p>
+        </mat-label>
+        <mat-label>
+            <span><b>Address </b></span>
+            <p>{{ userCreateData.address }}</p>
+        </mat-label>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+        <button mat-raised-button color="confirm-btn" (click)="confirm()" *ngIf="!isEdit">
+            Create
+        </button>
+        <button mat-raised-button color="confirm-btn" (click)="confirm()" *ngIf="isEdit">
+            Update
+        </button>
+        <button mat-raised-button color="red" routerLink="../../edit/{{ userCreateData.id }}" *ngIf="isEdit">
+            Cancel
+        </button>
+        <button mat-raised-button color="red" routerLink="../../create/{{ userCreateData.id }}" *ngIf="!isEdit">
+            Cancel
+        </button>
+    </mat-card-actions>
+</mat-card>

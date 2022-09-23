@@ -1,0 +1,32 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>SCM Bulletin Board</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-subtitle>Login Form</mat-card-subtitle>
+    <mat-error class="incorrect-err" *ngIf="incorrectUser">Incorrect email or password. Please check and try again.</mat-error>
+    <mat-card-content>
+        <form [formGroup]="loginForm" novalidate>
+            <mat-form-field appearance="fill">
+                <mat-label>Email: </mat-label>
+                <input type="email" formControlName="email" matInput placeholder="Enter your email">
+                <mat-error *ngIf="loginForm.controls['email'].dirty && loginForm.controls['email'].hasError('required')">Email is required.</mat-error>
+                <mat-error *ngIf="loginForm.controls['email'].dirty && loginForm.controls['email'].hasError('email')">Please enter valid email type.</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+                <mat-label>Password: </mat-label>
+                <input type="password" formControlName="password" matInput>
+            </mat-form-field>
+    
+            <section>
+                <mat-checkbox color="primary" formControlName="remember">Remember me</mat-checkbox>
+            </section>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button class="login-btn" (click)="checkUser(loginForm.value)" [disabled]="!loginForm.valid">Login</button>
+    </mat-card-actions>
+    
+    <mat-progress-bar mode="indeterminate" *ngIf="showLoading"></mat-progress-bar>
+</mat-card>

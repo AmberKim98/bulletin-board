@@ -1,0 +1,96 @@
+<p>user-create-update works!</p>
+<div class="inner-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title class="ptop-10">{{ isCreate ? 'Create User': (isEdit ? 'Edit User' : 'User Profile') }}</mat-card-title>
+            <button mat-raised-button (click)="changeEditForm()" *ngIf="isDetail" routerLink="/users/edit/{{ currentID }}">
+                Edit
+            </button>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="profile-pic" *ngIf="isEdit">
+                <img src="{{url}}">
+            </div>
+            <div>
+                <form [formGroup]="userCreateForm" class="user-create-form" novalidate>
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input type="text" formControlName="name" matInput [readonly]="isDetail">
+                        <mat-error *ngIf="userCreateForm.controls['name'].dirty && userCreateForm.controls['name'].hasError('required')">Name is required.</mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Email Address</mat-label>
+                        <input type="email" formControlName="email" matInput [readonly]="isDetail">
+                        <mat-error *ngIf="userCreateForm.controls['email'].dirty && userCreateForm.controls['email'].hasError('required')">Email is required.</mat-error>
+                        <mat-error *ngIf="userCreateForm.controls['email'].dirty && userCreateForm.controls['email'].hasError('email')">Invalid email format</mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field *ngIf="!isEdit">
+                        <mat-label>Password</mat-label>
+                        <input type="password" formControlName="password" matInput [readonly]="isDetail">
+                        <mat-error *ngIf="userCreateForm.controls['password'].dirty && userCreateForm.controls['password'].hasError('required')">Password is required.</mat-error>
+                        <mat-error *ngIf="userCreateForm.controls['password'].dirty && userCreateForm.controls['password'].hasError('minlength')">Password must be at least 8 characters long.</mat-error>
+                        <mat-error *ngIf="userCreateForm.controls['password'].dirty && userCreateForm.controls['password'].hasError('pattern')">Password must contain at least one uppercase and one digit.</mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field *ngIf="!isEdit">
+                        <mat-label>Confirm Password</mat-label>
+                        <input type="password" formControlName="confirmPassword" matInput [readonly]="isDetail">
+                        <mat-error *ngIf="userCreateForm.controls['confirmPassword'].dirty && userCreateForm.controls['confirmPassword'].hasError('required')">Confirmation Password is required.</mat-error>
+                    </mat-form-field>
+                    <span class="error-msg" *ngIf="userCreateForm.controls['confirmPassword'].touched && userCreateForm.controls['confirmPassword'].dirty && userCreateForm.hasError('unmatch')">Unmatched confirmation password!</span>
+
+                    <mat-form-field>
+                        <mat-label>Type</mat-label>
+                        <mat-select matInput formControlName="type" [disabled]="isDetail">
+                            <mat-option value="0">Admin</mat-option>
+                            <mat-option value="1">User</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Phone</mat-label>
+                        <input type="tel" formControlName="phone" matInput [readonly]="isDetail">
+                        <mat-error *ngIf="userCreateForm.controls['phone'].dirty && userCreateForm.controls['phone'].hasError('required')">Phone number is required.</mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Address</mat-label>
+                        <textarea matInput formControlName="address" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [readonly]="isDetail"></textarea>
+                    </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Date of Birth</mat-label>
+                        <input formControlName="dob" matInput [matDatepicker]="picker" [readonly]="isDetail">
+                        <mat-datepicker-toggle matSuffix [for]="picker" class="calendar-icon">
+                            <mat-icon>calendar</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+        
+                    <div class="profile-div" *ngIf="!isDetail">
+                        <label for="fileInput" class="profile-label">Profile</label>
+                        <div class="file-div">
+                            <mat-label id="chosenFile">No file chosen</mat-label>
+                            <button mat-raised-button (click)="fileInput.click()" color="primary">
+                                Choose your profile
+                            </button>
+                            <input #fileInput type="file" hidden="true" formControlName="profile" (change)="fileChange($event)">
+                        </div>
+                    </div>
+
+                    <mat-label *ngIf="isEdit" (click)="saveDraft()"><a href="users/edit/{{ currentID }}/change-password">Change Password</a></mat-label>
+                </form>
+            </div>
+        </mat-card-content>
+        <mat-card-actions *ngIf="isEdit || isCreate">
+            <button type="submit" mat-raised-button class="confirm-btn" [disabled]="!userCreateForm.valid" (click)="gotoConfirm(userCreateForm.value)">
+                Confirm
+            </button>
+            <button class="reset-btn" mat-raised-button (click)="userCreateForm.reset()">
+                Clear
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

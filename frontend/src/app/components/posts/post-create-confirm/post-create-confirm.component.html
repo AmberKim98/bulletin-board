@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ isEdit ? 'Update Post Confirmation' : 'Create Post Confirmation' }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <mat-label>
+            <span><b>Title </b></span>
+            <p>{{ postData.title }}</p>
+        </mat-label>
+        <mat-label>
+            <span><b>Description </b></span>
+            <p>{{ postData.description }}</p>
+        </mat-label>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+        <button mat-raised-button color="confirm-btn" (click)="confirm()" *ngIf="!isEdit">
+            Create
+        </button>
+        <button mat-raised-button color="confirm-btn" (click)="confirm()" *ngIf="isEdit">
+            Update
+        </button>
+        <button mat-raised-button color="red" routerLink="../../edit/{{ postData.id }}">
+            Cancel
+        </button>
+    </mat-card-actions>
+</mat-card>

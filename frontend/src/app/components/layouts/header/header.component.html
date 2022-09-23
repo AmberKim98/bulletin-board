@@ -1,0 +1,17 @@
+<mat-toolbar class="mat-elevation-z3">
+    <mat-toolbar-row>
+        <div class="right-side-nav">
+            <a class="nav-bar-brand" routerLink="/posts">SCM Bulletin Board</a>
+            <a mat-button routerLink="/users" *ngIf="userType == 0">Users</a>
+            <a mat-button routerLink="/users/detail/{{ loginData.id }}" *ngIf="userType == 1">User</a>
+            <a mat-button routerLink="/posts">Posts</a>
+        </div>
+        <div class="left-side-nav">
+            <a mat-button [routerLink]="">
+                <mat-icon>person</mat-icon>
+                {{ userName }}
+            </a>
+            <a mat-button (click)="logout()">Logout</a>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

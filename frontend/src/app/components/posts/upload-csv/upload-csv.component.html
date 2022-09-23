@@ -1,0 +1,16 @@
+<mat-card class="mat-elevation-z2">
+    <mat-card-header>
+        <mat-card-title>Upload CSV file</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <input type="file" accept=".csv" (change)="fileChange($event)">
+        <div class="error-msg">
+            <mat-error *ngIf="fileSizeError">Uploaded File must be CSV type and should not be more than 2MB.</mat-error>
+        </div>
+    </mat-card-content>
+    <mat-card-actions (click)="uploadPosts()">
+        <button mat-raised-button class="import-btn" [disabled]="!valid">
+            Import File
+        </button>
+    </mat-card-actions>
+</mat-card>

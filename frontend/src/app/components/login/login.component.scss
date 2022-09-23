@@ -1,0 +1,59 @@
+.mat-card {
+    position: absolute;
+    width: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    margin: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #fff;
+    .incorrect-err {
+        padding: 10px 20px 0 20px;
+    }
+    .mat-card-header {
+        padding-top: 20px;
+        background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+        color: #fff;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+    .mat-card-subtitle {
+        padding: 20px 20px 0 20px;
+        margin: 0;
+        font-size: 20px;
+        font-weight: 500;
+    }
+    .mat-card-content {
+        padding: 20px;
+        margin: 0;
+    }
+    .mat-card-actions {
+        text-align: center;
+        justify-content: center;
+        display: flex;
+        margin-bottom: 30px;
+        button {
+            width: 180px;
+            transition: all 0.3s ease 0s;
+            border-radius: 50px;
+        }
+        button:enabled:hover {
+            // background: linear-gradient(#3f51b5, #5262bc);
+            color:#EFFFFB;
+            box-shadow: 0px 5px 20px rgba(82, 98, 188, 0.4);
+            transform: translateY(-5px);
+        }
+    }
+}
+.mat-form-field {
+    width: 100%;
+}
+.login-btn:enabled {
+    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+    color: #fff;
+}
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: rgba(89, 206, 143, 0.03) !important;
+}

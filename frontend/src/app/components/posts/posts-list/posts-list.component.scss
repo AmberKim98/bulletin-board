@@ -1,0 +1,74 @@
+.posts-list {
+    margin: 0 30px;
+    .post-actions {
+        margin-bottom: 20px;
+        .mat-form-field {
+            width: 300px;
+        }
+        .btn {
+            margin-left: 20px;
+            transition: all 0.3s ease-out;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            color: #fff;
+        }
+        .search-btn:hover {
+            background-color: #5262bc;
+            color: #fff;
+        }
+        .add-btn:hover {
+            background-color: #3CCF4E;
+        }
+        .upload-btn:hover {
+            background-color:#3AB0FF;
+        }
+        .download-btn:hover {
+            background-color: #3F4E4F;
+        }
+    }
+    table {
+        width: 100%;
+        th {
+            font-size: 15px;
+            text-align: center;
+            background-color: #0082c8;
+            color: #F2FFE9;
+        }
+        .edit-icon,
+        .remove-icon {
+            transition: all 0.3s ease-out;
+        }
+        .edit-icon:hover,
+        .remove-icon:hover {
+            transform: translateY(-5px);
+        }
+        .post-detail-link {
+            text-decoration: none;
+            font-weight: bold;
+            color: #5262bc;
+        }
+        .post-detail-link:hover{
+            text-decoration: underline;
+        }
+        .mat-row:nth-child(odd) {
+            background-color: #fff;
+        }
+        .mat-row:nth-child(even) {
+            background-color: #eceef8;
+        }
+        .mat-cell {
+            text-align: center;
+            padding: 10px;
+        }
+        .mat-column-title {
+            width: 30%;
+        }
+        .mat-column-description {
+            width: 40%;
+        }
+    }
+    .mat-paginator {
+        background-color: transparent;
+    }
+}

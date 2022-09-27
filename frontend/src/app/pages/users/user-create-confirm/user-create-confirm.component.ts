@@ -11,6 +11,8 @@ import * as _ from 'lodash';
 export class UserCreateConfirmComponent implements OnInit {
   userCreateData: any;
   loggedinUserData: any;
+  currentUserId: any;
+  currentUserRole: any;
   isEdit: any;
 
   constructor(
@@ -26,19 +28,23 @@ export class UserCreateConfirmComponent implements OnInit {
       })
    }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let data:any = localStorage.getItem('loggedinUser');
+    this.currentUserId = JSON.parse(data).id;
+    this.currentUserRole = JSON.parse(data).type;
+  }
 
   confirm() {
     if(this.isEdit == true) {
       this.userService.updateUser(this.userCreateData).subscribe(data => {
         localStorage.setItem('updateComplete', 'true');
         localStorage.removeItem('updatedData');
-        this.router.navigate(['users']);
+        this.checkUserRole();
       })
     }
     else {
       this.userService.createUser(this.userCreateData).subscribe(data => {
-        this.router.navigate(['users']);
+        this.checkUserRole();
       })
     }
 
@@ -50,5 +56,12 @@ export class UserCreateConfirmComponent implements OnInit {
 
   hidePassword(pwd: any) {
     return Array(pwd.length+1).join('*');
+  }
+
+  checkUserRole() {
+    switch(this.currentUserRole) {
+      case '1': this.router.navigate(['/users/detail/' + this.currentUserId]);break;
+      case '0': this.router.navigate(['/users']);break;
+    }
   }
 }

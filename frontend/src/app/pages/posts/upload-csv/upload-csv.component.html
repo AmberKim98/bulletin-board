@@ -6,6 +6,7 @@
         <input type="file" accept=".csv" (change)="fileChange($event)">
         <div class="error-msg">
             <mat-error *ngIf="fileSizeError">Uploaded File must be CSV type and should not be more than 2MB.</mat-error>
+            <mat-error *ngIf="!csvFieldValid">Title or description is required.</mat-error>
         </div>
     </mat-card-content>
     <mat-card-actions (click)="uploadPosts()">

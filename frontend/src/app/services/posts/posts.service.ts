@@ -2,12 +2,13 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Post } from 'src/app/interface/post';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
-  apiURL = 'http://localhost:3000/posts';
+  postAPI = environment.apiURL + '/posts';
   httpOptions = {
     headers: new HttpHeaders({'Content-type': 'application/json'})
   };
@@ -18,14 +19,14 @@ export class PostsService {
 
   // get all posts
   getAllPosts() {
-    return this.http.get(this.apiURL, this.httpOptions).pipe(
+    return this.http.get(this.postAPI, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
   
   // get post by id
   getPostById(id: number) {
-    return this.http.get(this.apiURL + '/' + id, this.httpOptions).pipe(
+    return this.http.get(this.postAPI + '/' + id, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
@@ -33,7 +34,7 @@ export class PostsService {
   // create posts
   createPost(data: Post): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post(this.apiURL, body, this.httpOptions).pipe(
+    return this.http.post(this.postAPI, body, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
@@ -41,20 +42,20 @@ export class PostsService {
   // edit posts
   editPost(data: Post): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.patch(this.apiURL + '/' + data.id, body, this.httpOptions).pipe(
+    return this.http.patch(this.postAPI + '/' + data.id, body, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
 
   // delete post
   deletePost(id: number) {
-    return this.http.delete(this.apiURL + '/' + id, this.httpOptions).pipe(
+    return this.http.delete(this.postAPI + '/' + id, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
 
   downloadPosts():Observable<Blob> {
-    return this.http.get(this.apiURL, { responseType: 'blob' });
+    return this.http.get(this.postAPI, { responseType: 'blob' });
   }
 
   // handle errors

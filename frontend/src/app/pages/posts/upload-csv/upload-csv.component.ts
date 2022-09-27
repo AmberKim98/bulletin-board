@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { PostsService } from 'src/app/services/posts/posts.service';
 import { Router } from '@angular/router';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-upload-csv',
@@ -12,6 +13,8 @@ export class UploadCSVComponent implements OnInit {
   postData: any;
   fileSizeError: any;
   valid = false;
+  csvFieldValid = true;
+  currentUserId: any;
 
   constructor(
     private postService: PostsService,
@@ -19,6 +22,8 @@ export class UploadCSVComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let data: any = localStorage.getItem('loggedinUser');
+    this.currentUserId = JSON.parse(data).id;
   }
 
   fileChange(event: any) {
@@ -44,16 +49,37 @@ export class UploadCSVComponent implements OnInit {
         let fileName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[fileName];
         this.postData = XLSX.utils.sheet_to_json(worksheet);
+        this.csvFieldValid = this.checkCSV(this.postData);
       }
       fileReader.readAsArrayBuffer(inputFile);
     }
   }
 
   uploadPosts() {
-    for(var i=0; i<this.postData.length; i++) {
-      this.postService.createPost(this.postData[i]).subscribe(data => {
-        this.router.navigate(['posts']);
-      })
+    if(this.csvFieldValid == true) {
+      this.csvFieldValid = true;
+      for(var i=0; i<this.postData.length; i++) {
+        this.postData[i].created_user_id = this.currentUserId;
+        this.postService.createPost(this.postData[i]).subscribe(data => {
+          this.router.navigate(['posts']);
+        })
+      }
     }
+    else {
+      this.csvFieldValid = false;
+    }
+
+  }
+
+  checkCSV(data: any) {
+    let headers: any, valid: any;
+    for(var i=0; i<data.length; i++) {
+      headers = Object.keys(data[i]);
+      if(_.includes(headers, 'title') && _.includes(headers, 'description')) {
+        valid = true;
+      }
+      else valid = false;
+    }
+    return valid;
   }
 }

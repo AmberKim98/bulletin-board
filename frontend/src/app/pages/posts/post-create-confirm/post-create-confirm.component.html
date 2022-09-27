@@ -21,7 +21,10 @@
         <button mat-raised-button color="confirm-btn" (click)="confirm()" *ngIf="isEdit">
             Update
         </button>
-        <button mat-raised-button color="red" routerLink="../../edit/{{ postData.id }}">
+        <button mat-raised-button color="red" routerLink="../../edit/{{ postData.id }}" *ngIf="isEdit">
+            Cancel
+        </button>
+        <button mat-raised-button color="red" routerLink="../../create" *ngIf="!isEdit">
             Cancel
         </button>
     </mat-card-actions>

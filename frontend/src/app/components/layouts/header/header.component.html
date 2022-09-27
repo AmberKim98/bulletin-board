@@ -7,7 +7,7 @@
             <a mat-button routerLink="/posts">Posts</a>
         </div>
         <div class="left-side-nav">
-            <a mat-button [routerLink]="">
+            <a mat-button routerLink="/users/detail/{{ loginData.id }}">
                 <mat-icon>person</mat-icon>
                 {{ userName }}
             </a>

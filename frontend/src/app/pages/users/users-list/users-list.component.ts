@@ -4,7 +4,7 @@ import { User } from 'src/app/interface/user';
 import { UsersService } from 'src/app/services/users/users.service';
 import * as _ from 'lodash';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { formatDate } from '@angular/common';
 
@@ -63,6 +63,8 @@ export class UsersListComponent implements OnInit {
     let email = this.searchEmail;
     let createdFrom = this.searchCreatedFrom;
     let createdTo = this.searchCreatedTo;
+    let empty = false;
+
     let searchResult = [];
     let result: any;
     if(name) {
@@ -73,6 +75,7 @@ export class UsersListComponent implements OnInit {
         searchResult.push(result[j]);
       }
     }
+
     if(email) {
       result = _.filter(this.users, function(element) {
         return element.email.trim().toLowerCase().includes(email.trim().toLowerCase());
@@ -81,8 +84,8 @@ export class UsersListComponent implements OnInit {
         searchResult.push(result[j]);
       }
     }
+
     if(createdFrom) {
-      let today = new Date();
       if(createdTo) {
         result = _.filter(this.users, function(element) {
           return formatDate(element.created_at, 'YYYY/MM/dd', 'en') >= formatDate(createdFrom, 'YYYY/MM/dd', 'en') && formatDate(element.created_at, 'YYYY/MM/dd', 'en') <= formatDate(createdTo, 'YYYY/MM/dd', 'en')
@@ -97,7 +100,37 @@ export class UsersListComponent implements OnInit {
         searchResult.push(result[i]);
       }
     }
-    this.dataSource.data = _.uniq(searchResult);
+
+    const emptyCheck = this.checkEmpty(name, email, createdFrom, createdTo);
+
+    if(emptyCheck) {
+      this.dataSource.data = this.users;
+    }
+    else {
+      this.dataSource.data = _.uniq(searchResult);
+    }
+  }
+
+  checkEmpty(name: any, email: any, createdFrom: any, createdTo: any) {
+    let isNameEmpty, isEmailEmpty, isCreatedFromEmpty, isCreatedToEmpty;
+
+    if(name == undefined || name == null || name == '') {
+      isNameEmpty = true;
+    }
+    if(email == undefined || email == null || email == '') {
+      isEmailEmpty = true;
+    }
+    if(createdFrom == undefined || createdFrom == null || createdFrom == '') {
+      isCreatedFromEmpty = true;
+    }
+    if(createdTo == undefined || createdTo == null || createdTo == '') {
+      isCreatedToEmpty = true;
+    }
+
+    if(isNameEmpty && isEmailEmpty && isCreatedFromEmpty && isCreatedToEmpty) {
+      return true;
+    }
+    else return false;
   }
 
   onKeyUp(event: Event) {

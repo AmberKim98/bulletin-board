@@ -2,12 +2,13 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { User } from 'src/app/interface/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  apiURL = 'http://localhost:3000/users';
+  userAPI = environment.apiURL + '/users';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-type': 'application/json' })
   };
@@ -17,32 +18,32 @@ export class UsersService {
   ) { }
 
   getAllUsers() {
-    return this.http.get(this.apiURL, this.httpOptions).pipe(
+    return this.http.get(this.userAPI, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }
 
   createUser(data: User): Observable<User> {
-    return this.http.post<User>(this.apiURL, data, this.httpOptions).pipe(
+    return this.http.post<User>(this.userAPI, data, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }
 
   getUserById(id: number): Observable<User> {
-    return this.http.get<User>(this.apiURL + '/' + id, this.httpOptions).pipe(
+    return this.http.get<User>(this.userAPI + '/' + id, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }
 
   updateUser(data: User):Observable<User> {
     const body = JSON.stringify(data);
-    return this.http.patch<User>(this.apiURL + '/' + data.id, body, this.httpOptions).pipe(
+    return this.http.patch<User>(this.userAPI + '/' + data.id, body, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }
 
   deleteUser(id: number): Observable<User> {
-    return this.http.delete<User>(this.apiURL + '/' + id, this.httpOptions).pipe(
+    return this.http.delete<User>(this.userAPI + '/' + id, this.httpOptions).pipe(
       catchError(this.handleError)
     )
   }

@@ -14,7 +14,6 @@ export class UserGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean | UrlTree {
       let url:string = state.url;
-      
       return this.checkLogin(url);
     }
   
@@ -37,12 +36,9 @@ export class UserGuard implements CanActivate {
 
   // to reset local storage data of create and update forms
   resetDraft(url:any) {
-    switch(url) {
-      case '/posts': 
-        localStorage.removeItem('oldPostData');break;
-      case '/users':
-        localStorage.removeItem('oldUserData');break;
-      default: break;
+    if(url == '/posts' || url == '/users') {
+      localStorage.removeItem('oldPostData');
+      localStorage.removeItem('oldUserData');
     }
   }
 }

@@ -53,6 +53,7 @@
                         <mat-label>Phone</mat-label>
                         <input type="tel" formControlName="phone" matInput [readonly]="isDetail">
                         <mat-error *ngIf="userCreateForm.controls['phone'].dirty && userCreateForm.controls['phone'].hasError('required')">Phone number is required.</mat-error>
+                        <mat-error *ngIf="userCreateForm.controls['phone'].dirty && userCreateForm.controls['phone'].hasError('pattern')">Invalid phone number format.</mat-error>
                     </mat-form-field>
         
                     <mat-form-field>

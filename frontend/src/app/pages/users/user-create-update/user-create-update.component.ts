@@ -47,7 +47,7 @@ export class UserCreateUpdateComponent implements OnInit {
       ]),
       'confirmPassword': new FormControl('', [Validators.required]),
       'type': new FormControl(''),
-      'phone': new FormControl('', [Validators.required]),
+      'phone': new FormControl('', [Validators.required, Validators.pattern('[0-9]*$')]),
       'dob': new FormControl(''),
       'address': new FormControl(''),
       'profile': new FormControl('')
